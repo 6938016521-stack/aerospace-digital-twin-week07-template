@@ -1,0 +1,32 @@
+name: Student artifact validation
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Validate student submission when present
+        run: |
+          if test -f student/submission.json; then
+            npm run student:validate
+          else
+            echo 'No submission yet — template is incomplete, not a verified student model.'
+          fi
+      - name: Check student ownership when a template base is configured
+        env:
+          PLATFORM_BASE_SHA: ${{ vars.PLATFORM_BASE_SHA }}
+        run: |
+          if test -n "$PLATFORM_BASE_SHA"; then
+            node scripts/student/ownership.mjs "$PLATFORM_BASE_SHA"
+          else
+            echo 'Platform development repository: set PLATFORM_BASE_SHA on student template repositories.'
+          fi

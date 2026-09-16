@@ -1,0 +1,83 @@
+:root {
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #16313a;
+  background: #f6f7f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  --muted: #5e7176;
+  --line: #dce3dd;
+  --accent: #b45734;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 3px solid #b45734; outline-offset: 7px; }
+p, h1, h2, h3 { margin: 0; }
+.shell { max-width: 1560px; margin: 0 auto; padding: 0 52px; }
+.masthead { min-height: 112px; display: flex; align-items: center; gap: 32px; border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 13px; font-size: 10px; line-height: 1.55; letter-spacing: 1.8px; }
+.brand strong { font-weight: 500; letter-spacing: 1.1px; }
+.brand-mark { width: 43px; height: 43px; background: #18363e; color: #fff; border-radius: 50%; display: grid; place-content: center; font: 33px Georgia, serif; position: relative; padding-bottom: 4px; }
+.brand-mark span { position: absolute; right: 6px; top: 4px; color: #e9ac89; font: 15px sans-serif; }
+.course-label { margin-left: auto; font-size: 12px; font-weight: 650; }
+.course-label span { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; font-weight: 400; }
+.phase-pill { border: 1px solid var(--line); border-radius: 20px; padding: 10px 13px; font-size: 9px; letter-spacing: 1.2px; white-space: nowrap; }
+.status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #b45734; margin-right: 5px; }
+.intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 52px; padding: 48px 0 38px; }
+.eyebrow { font-size: 9px; font-weight: 650; letter-spacing: 1.8px; }
+.intro .eyebrow { color: var(--accent); margin-bottom: 14px; }
+h1 { font-size: clamp(40px, 4.3vw, 66px); line-height: 1.03; font-weight: 500; letter-spacing: -2.6px; }
+h1 span { color: #6a7f82; }
+.intro-note { max-width: 374px; padding-bottom: 4px; }
+.intro-note > p:first-child { font-size: 16px; line-height: 1.5; margin-bottom: 11px; }
+.intro-note .muted { font-size: 12px; line-height: 1.75; color: var(--muted); }
+.workspace { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(280px, 1fr); gap: 26px; }
+.aircraft-panel { display: flex; flex-direction: column; background: #edf1ed; border: 1px solid #d7e0da; border-radius: 5px; overflow: hidden; min-height: 392px; }
+.panel-heading { display: flex; justify-content: space-between; align-items: center; padding: 21px 23px; gap: 14px; }
+h2 { font-size: 13px; font-weight: 550; }
+.mono-tag { font-size: 8px; font-family: ui-monospace, monospace; color: #536d72; letter-spacing: 1.2px; border: 1px solid #cbd6d0; border-radius: 3px; padding: 5px 7px; }
+.aircraft-empty { flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 22px 15px 32px; background-image: radial-gradient(#ccd7d1 0.6px, transparent 0.6px); background-size: 18px 18px; }
+.empty-symbol { position: relative; border: 1px solid #bfd0c7; border-radius: 50%; width: 52px; height: 52px; margin-bottom: 22px; }
+.empty-symbol span { position: absolute; background: #8da69b; width: 15px; height: 1px; left: 17px; top: 25px; }
+.empty-symbol span:last-child { transform: rotate(90deg); }
+.aircraft-empty .eyebrow { color: #667e76; font-size: 8px; }
+.aircraft-empty h3 { font-weight: 500; font-size: 24px; letter-spacing: -0.6px; margin-top: 10px; margin-bottom: 12px; }
+.aircraft-empty > p:not(.eyebrow) { font-size: 12px; line-height: 1.8; color: var(--muted); }
+.future-label { font-size: 10px; color: #506b60; margin-top: 20px; padding: 6px 10px; border: 1px solid #d0ddd3; background: #e7eee7; border-radius: 3px; }
+.aircraft-footer { display: flex; align-items: center; gap: 20px; border-top: 1px solid #d7e0da; padding: 15px 22px; font-size: 9px; color: #536c70; }
+.aircraft-footer > span { white-space: nowrap; }
+.axis { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 5px; }
+.axis.x { background: #ae634e; }.axis.y { background: #70886e; }.axis.z { background: #5a7e9c; }
+.frame-label { margin-left: auto; font-size: 8px; letter-spacing: 1.3px; }
+.section-heading { display: flex; align-items: center; justify-content: space-between; padding: 5px 0 14px; }
+.count { font: 10px ui-monospace, monospace; color: #6b807b; }
+.module-list { list-style: none; margin: 0; padding: 0; }
+.module-card { border: 1px solid var(--line); background: #fffefa; border-radius: 5px; padding: 20px; }
+.module-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; font: 8px ui-monospace, monospace; color: #60766f; letter-spacing: 1px; }
+.module-card h3 { font-size: 21px; letter-spacing: -0.45px; font-weight: 550; margin: 16px 0 10px; }
+.module-card p { font-size: 11px; line-height: 1.8; color: var(--muted); }
+.implementation-badge { display: inline-block; color: #995032; background: #f5ece2; font-size: 9px; padding: 6px 9px; border-radius: 3px; margin-top: 17px; }
+.lessons-section { margin-top: 25px; }
+.catalog-empty { border-top: 1px solid var(--line); padding: 17px 0; }
+.catalog-empty h3 { font-size: 12px; font-weight: 500; margin-bottom: 7px; }
+.catalog-empty p { font-size: 11px; line-height: 1.8; max-width: 330px; color: var(--muted); }
+.lesson-list { list-style: none; padding: 0; margin: 0; }
+.lesson-list li { display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid var(--line); font-size: 12px; }
+.lesson-list span { color: var(--muted); }
+.state-strip { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 31px; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); gap: 20px; }
+.state-strip > div + div { border-left: 1px solid var(--line); padding-left: 24px; }
+.state-strip .eyebrow { font-size: 8px; color: #6a7d76; letter-spacing: 1.2px; }
+.state-strip strong { display: block; font-size: 14px; font-weight: 500; margin: 11px 0 7px; }
+.state-strip p:last-child { font-size: 10px; color: var(--muted); line-height: 1.6; }
+.page-footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px 0 28px; font-size: 9px; color: #6b7a75; }
+.page-footer > span:last-child { font: 8px ui-monospace, monospace; letter-spacing: 0.5px; }
+.footer-divider { margin: 0 10px; color: #b5beb7; }
+
+@media (min-width: 1440px) { .intro { padding-top: 60px; padding-bottom: 46px; } .aircraft-panel { min-height: 448px; } }
+@media (max-width: 1000px) { .shell { padding: 0 28px; } .course-label span { display: none; } .intro { gap: 35px; } .intro-note { max-width: 310px; } .workspace { gap: 20px; grid-template-columns: minmax(0, 1.4fr) minmax(270px, 1fr); } .aircraft-footer { gap: 12px; } .frame-label { display: none; } .state-strip > div + div { padding-left: 16px; } }
+@media (max-width: 720px) { .shell { padding: 0 20px; } .masthead { min-height: 88px; gap: 12px; } .course-label { display: none; } .phase-pill { margin-left: auto; font-size: 8px; padding: 8px; } .intro { display: block; padding-top: 32px; } h1 { font-size: 48px; } .intro-note { margin-top: 22px; max-width: 440px; } .workspace { grid-template-columns: 1fr; } .aircraft-panel { min-height: 368px; } .catalog-panel { margin-top: 8px; } .state-strip { grid-template-columns: repeat(2, 1fr); row-gap: 25px; } .state-strip > div:nth-child(3) { border-left: none; padding-left: 0; } .page-footer { flex-direction: column; gap: 12px; } }
+@media (max-width: 380px) { .brand { font-size: 8px; letter-spacing: 1px; gap: 8px; } .brand-mark { width: 34px; height: 34px; font-size: 27px; } .phase-pill { font-size: 7px; } .panel-heading { padding: 18px 15px; } .aircraft-footer { padding: 14px 15px; } .desktop-break { display: none; } }

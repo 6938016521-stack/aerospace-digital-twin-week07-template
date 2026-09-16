@@ -1,0 +1,8 @@
+{
+  "name": "Week 07 Controls Lab",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "postCreateCommand": "npm ci",
+  "forwardPorts": [5173],
+  "portsAttributes": {"5173": {"label": "Digital Twin", "onAutoForward": "openBrowser"}},
+  "customizations": {"vscode": {"settings": {"files.autoSave": "afterDelay"}}}
+}
