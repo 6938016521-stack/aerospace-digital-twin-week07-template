@@ -7,12 +7,12 @@ import { quantity, radiansToDegrees } from '../../platform'
 import { pitchFields, pitchOutputs } from './pitch-model'
 const number = (v: EngineeringValue<CanonicalUnit> | undefined) => v?.status === 'known' ? v.value : undefined
 const display = (v: EngineeringValue<CanonicalUnit> | undefined) => v?.status === 'known' ? `${Number(v.value.toPrecision(6))} ${v.unit}` : 'Unconfigured'
-export function PitchPanel({ store, snapshot }: { store: AircraftStore; snapshot: StoreSnapshot }) {
+export function PitchPanel({ store, snapshot, experimentKind }: { store: AircraftStore; snapshot: StoreSnapshot; experimentKind?: 'prescribed' | 'effectiveness' | 'authority' }) {
   const [error, setError] = useState('')
   const [tab, setTab] = useState<'experiment' | 'setup' | 'calculations' | 'planning'>('experiment')
-  const c4 = snapshot.scenarioId === 'c4-authority-example'
-  const aero = c4 || snapshot.scenarioId === 'c3-elevator-example'
-  const active = aero || snapshot.scenarioId === 'c2-pitch-example'
+  const c4 = experimentKind ? experimentKind === 'authority' : snapshot.scenarioId === 'c4-authority-example'
+  const aero = c4 || (experimentKind ? experimentKind === 'effectiveness' : snapshot.scenarioId === 'c3-elevator-example')
+  const active = experimentKind !== undefined || aero || snapshot.scenarioId === 'c2-pitch-example'
   const enabled = snapshot.activeModuleIds.includes('controls')
   const canRun = enabled && (!c4 || snapshot.state.loads.pitchMoment.status === 'known')
   const controls = snapshot.state.modules.controls, output = snapshot.state.outputs.controls
@@ -36,9 +36,9 @@ export function PitchPanel({ store, snapshot }: { store: AircraftStore; snapshot
         const y = number(snapshot.state.massProperties.cgY), z = number(snapshot.state.massProperties.cgZ)
         if (y === undefined || z === undefined) return 'Configure all CG coordinates first.'
         const id = crypto.randomUUID(); return send('SET_CG', { position: { frame: 'engineering', unit: 'm', x, y, z }, provenanceId: id }, id)
-      }} />{aero && <ElevatorPanel store={store} snapshot={snapshot} section="setup" />}<>{c4 && <AuthorityPanel store={store} snapshot={snapshot} setup />}</><p>All experiments use My=(CGx−tailX)Fz. C3 derives Fz from its fixed-reference moment with no residual tail couple.</p><details><summary>Load a different example</summary>{loaders}</details></>}
+      }} />{aero && <ElevatorPanel store={store} snapshot={snapshot} section="setup" />}<>{c4 && <AuthorityPanel store={store} snapshot={snapshot} setup />}</><p>All experiments use My=(CGx−tailX)Fz. C3 derives Fz from its fixed-reference moment with no residual tail couple.</p>{!experimentKind && <details><summary>Load a different example</summary>{loaders}</details>}</>}
       {tab === 'calculations' && <>{aero && <ElevatorPanel store={store} snapshot={snapshot} section="calculations" />}<div className="pitch-results"><p>Required My = Iy × target − competing</p>{Object.entries(pitchOutputs).map(([name, config]) => <div key={name}><span>{config.label}</span><output aria-label={config.label}>{display(output?.[name])}</output></div>)}</div><p>Positive moment is nose-up. Inertia × achieved acceleration = net moment.</p></>}
-      <p>Illustrative only · no damping or translation. Stops exactly at ±30° using a shortened final step; not an aircraft validity limit.</p><button onClick={() => action('RESET_SCENARIO', { scenarioId: 'parameter-workspace' })}>Return to empty workspace</button>
+      <p>Illustrative only · no damping or translation. Stops exactly at ±30° using a shortened final step; not an aircraft validity limit.</p>{!experimentKind && <button onClick={() => action('RESET_SCENARIO', { scenarioId: 'parameter-workspace' })}>Return to empty workspace</button>}
     </>}{error && <p role="alert">{error}</p>}
   </section>
 }
