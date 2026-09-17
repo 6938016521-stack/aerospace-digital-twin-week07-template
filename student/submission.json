@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "week07.submission/v1",
+  "readiness": {
+    "ready": false,
+    "missing": [
+      "assumptions",
+      "model",
+      "prediction",
+      "verification",
+      "claim",
+      "reflection",
+      "aiUse",
+      "execution"
+    ]
+  },
+  "record": {
+    "id": "2e17a108-0d5d-48f1-ac29-d188a06cf203",
+    "revision": "80",
+    "model": {
+      "moduleId": "controls",
+      "modelId": "week07-student-model",
+      "version": "1.0.0"
+    },
+    "modelText": "{\n  \"schemaVersion\": \"week07.student-model/v1\",\n  \"id\": \"week07-student-model\",\n  \"version\": \"1.0.0\",\n  \"slots\": [\n    {\n      \"id\": \"controls.demand\",\n      \"expressions\": [\n        {\n          \"name\": \"requiredMoment\",\n          \"expression\": \"\",\n          \"unit\": \"N*m\"\n        }\n      ]\n    },\n    {\n      \"id\": \"controls.effectiveness\",\n      \"expressions\": [\n        {\n          \"name\": \"dynamicPressure\",\n          \"expression\": \"\",\n          \"unit\": \"Pa\"\n        },\n        {\n          \"name\": \"deltaCm\",\n          \"expression\": \"\",\n          \"unit\": \"1\"\n        },\n        {\n          \"name\": \"deltaMoment\",\n          \"expression\": \"\",\n          \"unit\": \"N*m\"\n        }\n      ]\n    }\n  ]\n}",
+    "modelHash": "fnv1a-adee3cf8",
+    "fields": {
+      "question": {
+        "suppliedBy": "instructor",
+        "locked": true,
+        "text": "Calculate required control moment, elevator moment, and the change with airspeed. Explain whether the nominal response meets +0.12 rad/s²."
+      },
+      "system": {
+        "suppliedBy": "instructor",
+        "locked": true,
+        "text": "Illustrative planar pitch model. Aircraft geometry, integration, force conversion and constraints are supplied."
+      },
+      "representation": {
+        "suppliedBy": "instructor",
+        "locked": true,
+        "text": "Body axes forward/right/down. Positive pitch moment nose-up. Positive Fz downward. Positive elevator trailing edge down. Reference/CG X=0 m; tail X=-3 m."
+      },
+      "physics": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": "This is because it pushes the tail down so the nose pivots up."
+      },
+      "assumptions": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      },
+      "inputs": {
+        "suppliedBy": "instructor",
+        "locked": true,
+        "text": "Iy=5000 kg·m²; target=+0.12 rad/s²; competing=-750 N-m; density=1.225 kg/m³; V=40 m/s; S=16 m²; chord=1.5 m; Cmδ=-0.8/rad; elevator=-5°. Inputs are illustrative, not calibrated."
+      },
+      "model": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      },
+      "prediction": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      },
+      "execution": {
+        "suppliedBy": "automatic",
+        "locked": false,
+        "text": ""
+      },
+      "verification": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      },
+      "claim": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      },
+      "reflection": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      },
+      "aiUse": {
+        "suppliedBy": "student",
+        "locked": false,
+        "text": ""
+      }
+    }
+  },
+  "model": {
+    "schemaVersion": "week07.student-model/v1",
+    "id": "week07-student-model",
+    "version": "1.0.0",
+    "slots": [
+      {
+        "id": "controls.demand",
+        "expressions": [
+          {
+            "name": "requiredMoment",
+            "expression": "",
+            "unit": "N*m"
+          }
+        ]
+      },
+      {
+        "id": "controls.effectiveness",
+        "expressions": [
+          {
+            "name": "dynamicPressure",
+            "expression": "",
+            "unit": "Pa"
+          },
+          {
+            "name": "deltaCm",
+            "expression": "",
+            "unit": "1"
+          },
+          {
+            "name": "deltaMoment",
+            "expression": "",
+            "unit": "N*m"
+          }
+        ]
+      }
+    ]
+  },
+  "runs": [],
+  "verification": null
+}
