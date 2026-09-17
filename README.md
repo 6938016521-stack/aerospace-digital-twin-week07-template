@@ -27,6 +27,8 @@ Follow **Understand → Model → Predict → Implement and check → Conclude**
 - Import your model JSON, run the baseline and changed conditions, and run verification checks.
 - Write an independent hand check, your conclusion, a limitation, next evidence and AI disclosure.
 
+**Run my model** calculates your results and starts a two-second pitch response from rest. Watch the aircraft rotate about its CG and compare the pitch angle and pitch rate for each investigation. Use **Pause pitch**, **Resume pitch**, or **Replay from rest** to inspect the response. Select the side camera for the clearest view. Each new run restores the starting condition; changing the investigation selection takes effect when you run again. A model that cannot execute displays an error instead of a reference response.
+
 Your expressions supply the app's required-moment and elevator-moment calculations. Aircraft geometry, integration and the user interface are provided. Edit only files under `student/`. Browser saves are drafts; they are not commits.
 
 ## 3. Save to GitHub

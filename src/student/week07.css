@@ -5,6 +5,9 @@
 .week07-panel .lab-field { display: grid; gap: .35rem; }
 .week07-panel .lab-field span { color: #4b5563; font-size: .9rem; }
 .week07-panel details { border-top: 1px solid #d1d5db; padding-top: .6rem; }
+.student-pitch-playback { border: 1px solid #b1ccd0; border-radius: 8px; background: #f0f8f8; padding: .8rem; }
+.student-pitch-playback h3 { margin-top: 0; }
+.student-pitch-playback button + button { margin-left: .45rem; }
 
 .github-save { border: 1px solid #b1ccd0; background: #f0f8f8; border-radius: 8px; padding: 12px; margin: 12px 0; }
 .github-save > button { background: #007785; color: white; font-weight: 700; }
