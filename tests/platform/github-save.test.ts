@@ -161,6 +161,46 @@ describe('student GitHub save HTTP boundary', () => {
     }
   })
 
+  it('accepts only this Codespace public origin when its proxy omits the forwarded protocol', async () => {
+    const { root } = createRepository()
+    const server = await serve(root, githubRunner())
+    const previousName = process.env.CODESPACE_NAME
+    const previousDomain = process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN
+    process.env.CODESPACE_NAME = 'musical-goldfish-qvpx45pp4rvjf9wx4'
+    process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN = 'app.github.dev'
+    const port = new URL(server.origin).port
+    const expectedOrigin = `https://${process.env.CODESPACE_NAME}-${port}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`
+    try {
+      const accepted = await fetch(`${server.origin}/api/student/github/save`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          origin: expectedOrigin,
+          'x-forwarded-host': new URL(expectedOrigin).host,
+          'x-student-save-token': 'test-token',
+        },
+        body: '{}',
+      })
+      const wrongPort = await fetch(`${server.origin}/api/student/github/save`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          origin: `https://${process.env.CODESPACE_NAME}-${Number(port) + 1}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`,
+          'x-student-save-token': 'test-token',
+        },
+        body: '{}',
+      })
+      expect(accepted.status).toBe(400)
+      expect(wrongPort.status).toBe(403)
+    } finally {
+      if (previousName === undefined) delete process.env.CODESPACE_NAME
+      else process.env.CODESPACE_NAME = previousName
+      if (previousDomain === undefined) delete process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN
+      else process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN = previousDomain
+      await server.close()
+    }
+  })
+
   it('rejects malformed and oversized bodies before writing student files', async () => {
     const { root } = createRepository()
     const server = await serve(root, githubRunner())

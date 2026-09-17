@@ -275,6 +275,17 @@ function requestOrigin(request: IncomingMessage): string | null {
   return Array.isArray(value) ? value[0] ?? null : value ?? null
 }
 
+function codespacesOrigin(request: IncomingMessage): string | null {
+  const name = process.env.CODESPACE_NAME?.trim()
+  const domain = process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN?.trim().toLowerCase()
+  const port = request.socket.localPort
+  const label = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/
+  if (!name || !domain || !label.test(name) || typeof port !== 'number' || !Number.isInteger(port) || port < 1 || port > 65_535) return null
+  const labels = domain.split('.')
+  if (!labels.length || labels.some((value) => !label.test(value))) return null
+  return `https://${name}-${port}.${domain}`
+}
+
 function isSameOrigin(request: IncomingMessage): boolean {
   const rawOrigin = requestOrigin(request)
   const forwardedHost = request.headers['x-forwarded-host']
@@ -288,7 +299,13 @@ function isSameOrigin(request: IncomingMessage): boolean {
     const protocol = forwardedProtocol === 'https' || forwardedProtocol === 'http'
       ? `${forwardedProtocol}:`
       : encrypted ? 'https:' : 'http:'
-    return origin.origin === `${protocol}//${host}`
+    if (origin.origin === `${protocol}//${host}`) return true
+
+    // GitHub Codespaces routes its public HTTPS hostname to the local Vite
+    // port, but does not reliably include x-forwarded-proto. Accept only the
+    // hostname assembled from this Codespace's server environment and the
+    // actual listening port; do not trust arbitrary github.dev origins.
+    return origin.origin === codespacesOrigin(request)
   } catch {
     return false
   }
