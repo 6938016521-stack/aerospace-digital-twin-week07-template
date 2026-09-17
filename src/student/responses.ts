@@ -31,6 +31,10 @@ type Submission = {
 
 const studentFields = ['physics', 'assumptions', 'model', 'prediction', 'verification', 'claim', 'reflection', 'aiUse'] as const
 const codeFence = (text: string) => `${'`'.repeat(Math.max(3, ...Array.from(text.matchAll(/`+/g), match => match[0].length + 1)))}\n${text}\n${'`'.repeat(Math.max(3, ...Array.from(text.matchAll(/`+/g), match => match[0].length + 1)))}`
+const inlineCode = (text: string) => {
+  const fence = '`'.repeat(Math.max(1, ...Array.from(text.matchAll(/`+/g), match => match[0].length + 1)))
+  return `${fence}${text}${fence}`
+}
 const answer = (value: unknown) => typeof value === 'string' && value.trim() ? codeFence(value) : '_Missing — no response supplied._'
 const text = (value: unknown, fallback = '_Missing — no response supplied._') => typeof value === 'string' && value.trim() ? value : fallback
 const runSummary = (run: Week07ModelRun, index: number) => {
@@ -39,7 +43,7 @@ const runSummary = (run: Week07ModelRun, index: number) => {
   const errors = [...(demand?.errors ?? []), ...(effect?.errors ?? [])]
   const values = [...Object.entries(demand?.values ?? {}), ...Object.entries(effect?.values ?? {})]
     .map(([name, value]) => `${name}=${value.value} ${value.unit}`)
-  return [`### Run ${index + 1}`, `- Recorded: ${text(run?.createdAt, '_Missing timestamp_')}`, `- Run ID: ${text(run?.id, '_Missing run ID_')}`, `- Record revision: ${text(run?.record?.revision, '_Missing revision_')}`, `- Model hash recorded with run: ${text(run?.record?.modelHash, '_Missing model hash_')}`, `- Prediction recorded with run: ${answer(run?.prediction)}`, `- Result status: ${errors.length ? `recorded with errors — ${errors.join(' ')}` : 'recorded values shown below'}`, values.length ? `- Values: ${values.join('; ')}` : '- Values: _Missing — no computed values recorded._'].join('\n')
+  return [`### Run ${index + 1}`, `- Recorded: ${text(run?.createdAt, '_Missing timestamp_')}`, `- Run ID: ${text(run?.id, '_Missing run ID_')}`, `- Record revision: ${text(run?.record?.revision, '_Missing revision_')}`, `- Model hash recorded with run: ${text(run?.record?.modelHash, '_Missing model hash_')}`, `- Prediction recorded with run:\n\n${answer(run?.prediction)}`, `- Result status: ${errors.length ? `recorded with errors — ${errors.join(' ')}` : 'recorded values shown below'}`, values.length ? `- Values: ${values.map(inlineCode).join('; ')}` : '- Values: _Missing — no computed values recorded._'].join('\n')
 }
 
 /** Pure, deterministic rendering of the evidence already present in a submission. It never recalculates student work. */

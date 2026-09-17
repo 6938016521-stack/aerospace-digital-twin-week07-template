@@ -16,6 +16,8 @@ npm run dev -- --host 0.0.0.0
 
 Local alternative: clone your fork, install Node 22.12 or later, run `npm ci`, then `npm run dev`.
 
+Before your first save, open **Actions** in your fork and click **I understand my workflows, go ahead and enable them** if GitHub shows that prompt. This enables the supplied submission checks; the app also runs model checks during the lab.
+
 ## 2. Complete the lab
 
 Follow **Understand → Model → Predict → Implement and check → Conclude**.

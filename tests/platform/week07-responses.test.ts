@@ -46,6 +46,18 @@ describe('Week 07 Markdown responses', () => {
     expect(markdown).toContain('````\nFirst line')
   })
 
+  it('keeps each recorded prediction fence separate from run list items and code-formats values', () => {
+    const firstRun = submission.runs[0]
+    const markdown = renderWeek07Responses({
+      ...submission,
+      runs: [firstRun, { ...firstRun, id: 'run-2', prediction: 'Second prediction.' }],
+    })
+
+    expect(markdown).toContain('- Prediction recorded with run:\n\n```\nPositive elevator moment.\n```\n- Result status:')
+    expect(markdown).toContain('- Prediction recorded with run:\n\n```\nSecond prediction.\n```\n- Result status:')
+    expect(markdown).toContain('- Values: `requiredMoment=1350 N*m`; `dynamicPressure=980 Pa`')
+  })
+
   it('reports stale verification instead of presenting it as current', () => {
     const markdown = renderWeek07Responses({ record: { modelHash: 'new', fields: {} }, verification: { modelHash: 'old', checkedAt: 'then', passed: true, detail: 'old result' } })
     expect(markdown).toContain('Stale verification record: it applies to old, while the submitted model is new.')
