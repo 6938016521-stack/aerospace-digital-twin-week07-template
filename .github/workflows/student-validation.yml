@@ -17,6 +17,7 @@ jobs:
       - name: Validate student submission when present
         run: |
           if test -f student/submission.json; then
+            npm run student:prepare -- --check
             npm run student:validate
           else
             echo 'No submission yet — template is incomplete, not a verified student model.'

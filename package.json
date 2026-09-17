@@ -15,7 +15,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "check": "npm run typecheck && npm run lint && npm test && npm run build",
-    "student:validate": "node --import tsx scripts/student/validate.ts"
+    "student:validate": "node --import tsx scripts/student/validate.ts",
+    "student:prepare": "node --import tsx scripts/student/prepare.ts"
   },
   "dependencies": {
     "@react-three/drei": "10.7.8",
