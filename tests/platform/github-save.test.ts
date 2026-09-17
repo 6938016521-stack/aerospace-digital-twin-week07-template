@@ -161,7 +161,7 @@ describe('student GitHub save HTTP boundary', () => {
     }
   })
 
-  it('accepts only this Codespace public origin when its proxy omits the forwarded protocol', async () => {
+  it('accepts only this Codespace proxy rewrite of the local Vite origin', async () => {
     const { root } = createRepository()
     const server = await serve(root, githubRunner())
     const previousName = process.env.CODESPACE_NAME
@@ -169,29 +169,44 @@ describe('student GitHub save HTTP boundary', () => {
     process.env.CODESPACE_NAME = 'musical-goldfish-qvpx45pp4rvjf9wx4'
     process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN = 'app.github.dev'
     const port = new URL(server.origin).port
-    const expectedOrigin = `https://${process.env.CODESPACE_NAME}-${port}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`
+    const expectedHost = `${process.env.CODESPACE_NAME}-${port}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`
     try {
       const accepted = await fetch(`${server.origin}/api/student/github/save`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          origin: expectedOrigin,
-          'x-forwarded-host': new URL(expectedOrigin).host,
+          origin: `http://localhost:${port}`,
+          'x-forwarded-host': expectedHost,
+          'x-forwarded-proto': 'https',
           'x-student-save-token': 'test-token',
         },
         body: '{}',
       })
-      const wrongPort = await fetch(`${server.origin}/api/student/github/save`, {
+      const wrongForwardedHost = await fetch(`${server.origin}/api/student/github/save`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          origin: `https://${process.env.CODESPACE_NAME}-${Number(port) + 1}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`,
+          origin: `http://localhost:${port}`,
+          'x-forwarded-host': `attacker-${port}.app.github.dev`,
+          'x-forwarded-proto': 'https',
+          'x-student-save-token': 'test-token',
+        },
+        body: '{}',
+      })
+      const wrongLocalPort = await fetch(`${server.origin}/api/student/github/save`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          origin: `http://127.0.0.1:${Number(port) + 1}`,
+          'x-forwarded-host': expectedHost,
+          'x-forwarded-proto': 'https',
           'x-student-save-token': 'test-token',
         },
         body: '{}',
       })
       expect(accepted.status).toBe(400)
-      expect(wrongPort.status).toBe(403)
+      expect(wrongForwardedHost.status).toBe(403)
+      expect(wrongLocalPort.status).toBe(403)
     } finally {
       if (previousName === undefined) delete process.env.CODESPACE_NAME
       else process.env.CODESPACE_NAME = previousName
