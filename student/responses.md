@@ -8,11 +8,11 @@ Answers and recorded model results from `submission.json`. This document does no
 
 - Record ID: 2e17a108-0d5d-48f1-ac29-d188a06cf203
 
-- Record revision: 80
+- Record revision: 487
 
 - Model hash: fnv1a-adee3cf8
 
-- Readiness: Marked incomplete or not ready; missing: assumptions, model, prediction, verification, claim, reflection, aiUse, execution
+- Readiness: Marked incomplete or not ready; missing: prediction, verification, claim, reflection, aiUse, execution
 
 ## Supplied setup (instructor supplied)
 
@@ -42,13 +42,21 @@ This is because it pushes the tail down so the nose pivots up.
 **Prompt:** Explain one supplied assumption and what could invalidate it: planar motion, fixed reference, local linear effectiveness, no trim or damping.
 
 **Student response:**
-_Missing — no response supplied._
+```
+One assumption is that the plane would tolerate the wind conditions and local linear effectiveness could invalidate it.
+```
 
 ### model
 **Prompt:** Write your demand, dynamic-pressure, coefficient and moment equations. Identify which quantities are supplied and which are unknown.
 
 **Student response:**
-_Missing — no response supplied._
+```
+Demand: Ms + Mcompeting
+Dynamic Pressure: 1/2 Roh V^2
+Coefficient: cm delta
+
+Roh is unknown.
+```
 
 ### prediction
 **Prompt:** Before running your own implementation, predict the sign of its elevator moment and the effect of halving airspeed. Explain the competing moment.

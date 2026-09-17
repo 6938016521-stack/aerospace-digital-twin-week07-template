@@ -3,8 +3,6 @@
   "readiness": {
     "ready": false,
     "missing": [
-      "assumptions",
-      "model",
       "prediction",
       "verification",
       "claim",
@@ -15,7 +13,7 @@
   },
   "record": {
     "id": "2e17a108-0d5d-48f1-ac29-d188a06cf203",
-    "revision": "80",
+    "revision": "487",
     "model": {
       "moduleId": "controls",
       "modelId": "week07-student-model",
@@ -47,7 +45,7 @@
       "assumptions": {
         "suppliedBy": "student",
         "locked": false,
-        "text": ""
+        "text": "One assumption is that the plane would tolerate the wind conditions and local linear effectiveness could invalidate it."
       },
       "inputs": {
         "suppliedBy": "instructor",
@@ -57,7 +55,7 @@
       "model": {
         "suppliedBy": "student",
         "locked": false,
-        "text": ""
+        "text": "Demand: Ms + Mcompeting\nDynamic Pressure: 1/2 Roh V^2\nCoefficient: cm delta\n\nRoh is unknown."
       },
       "prediction": {
         "suppliedBy": "student",
